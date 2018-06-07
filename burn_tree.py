@@ -69,6 +69,10 @@ def burn_tree(tree):
     
     return centers
 
+def burn_tree_using_centers(tree):
+    '''Implementation for tree burning algorithm (root at center each iteration)'''
+    pass
+
 
 def is_burning_sequence(tree, sequence):
     '''Returns True if the sequence is a valid burning sequence.'''
