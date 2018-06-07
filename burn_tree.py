@@ -30,7 +30,7 @@ def get_i_ancestor(node_distances, source, i):
         return source
     
     for node, dist in node_distances[source].items():
-        if dist == i and node_distances[0][node] < node_distances[0][source]:
+        if dist == i and node_distances[0][node] == node_distances[0][source] - i:
             return node
         
     raise RuntimeError("No ancestor found")
