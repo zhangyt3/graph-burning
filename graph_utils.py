@@ -1,4 +1,5 @@
 from pprint import pprint
+import numpy as np
 
 def create_adj_mat(filepath):
     '''Given a filepath, reads the contents and returns an adjacency matrix.'''
@@ -11,7 +12,7 @@ def create_adj_mat(filepath):
             if len(line) > 0:
                 adj_mat.append([int(x) for x in line.split(' ')])
     
-    return adj_mat
+    return np.array(adj_mat)
 
 
 if __name__ == '__main__':
