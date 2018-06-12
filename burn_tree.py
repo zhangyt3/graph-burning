@@ -37,7 +37,7 @@ def get_i_ancestor(node_distances, source, root, i):
     raise RuntimeError("No ancestor found")
     
 
-def burn_tree(tree):
+def burn_tree(tree, root=0):
     '''Implementation for tree burning algorithm (arbitrary root)
     Input:  a tree to burn
     Output: a burning sequence for the tree
@@ -50,17 +50,17 @@ def burn_tree(tree):
     
     i = 0
     while len(marked) < tree.order():
-        # Find the unmarked vertex farthest from the root (assumes root is  vertex 0)
-        farthest = find_farthest(node_distances, marked, 0)
+        # Find the unmarked vertex farthest from the root
+        farthest = find_farthest(node_distances, marked, root)
         
-        if node_distances[0][farthest] >= i:
+        if node_distances[root][farthest] >= i:
             # Add the ith ancestor of the farthest node to centers
-            i_ancestor = get_i_ancestor(node_distances, farthest, 0, i)
-            centers.insert(0, i_ancestor)
-        elif 0 not in centers:
+            i_ancestor = get_i_ancestor(node_distances, farthest, root, i)
+            centers.insert(root, i_ancestor)
+        elif root not in centers:
             # If there is no ith ancestor, add the root
-            i_ancestor = 0
-            centers.insert(0, 0)
+            i_ancestor = root
+            centers.insert(0, root)
         
         # Add all vertices within distance i of the i_ancestor to marked
         for node in tree:
