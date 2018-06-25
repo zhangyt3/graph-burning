@@ -43,6 +43,7 @@ def burn_tree(tree, root=0):
     Output: a burning sequence for the tree
     '''
     centers = []
+    num_marked = []
     marked = set()
     
     # Calculate distance between all pairs of nodes
@@ -63,13 +64,18 @@ def burn_tree(tree, root=0):
             centers.insert(0, root)
         
         # Add all vertices within distance i of the i_ancestor to marked
+        marked_it = 0
         for node in tree:
             if node_distances[i_ancestor][node] <= i:
-                marked.add(node)
+                if node not in marked:
+                    marked_it += 1
+                    marked.add(node)
+        
+        num_marked.append(marked_it)
         
         i += 1
     
-    return centers
+    return centers, num_marked
 
 
 def get_central_node(eccentricities, marked):
