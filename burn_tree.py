@@ -152,6 +152,18 @@ def burn_tree_using_centers(tree, update_root=True):
     
     return centers
 
+def get_leaves(tree):
+    '''Return a list containing the leaves of a tree.'''
+    degrees = nx.classes.function.degree(tree)
+    leaves = []
+
+    for node, deg in degrees:
+        if deg == 1:
+            leaves.append(node)
+    
+    return leaves
+
+
 def is_burning_sequence(tree, sequence):
     '''Returns True if the sequence is a valid burning sequence.'''
     pass
