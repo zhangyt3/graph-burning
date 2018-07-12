@@ -164,6 +164,19 @@ def get_leaves(tree):
     return leaves
 
 
+def get_neighbourhood(tree, source, radius, node_distances=None):
+    '''Return all vertices within radius of the source vertex.'''
+    if node_distances == None:
+        node_distances = shortest_path_lengths(tree)
+       
+    neighbourhood = set()
+    for node, dist in node_distances[source].items():
+        if dist <= radius:
+            neighbourhood.add(node)
+    
+    return neighbourhood
+
+
 def is_burning_sequence(tree, sequence):
     '''Returns True if the sequence is a valid burning sequence.'''
     pass
