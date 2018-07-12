@@ -152,7 +152,7 @@ def burn_tree_using_centers(tree, update_root=True):
     
     return centers
 
-def get_leaves(tree):
+def get_leaves(tree, root=None):
     '''Return a list containing the leaves of a tree.'''
     if tree.order() == 1:
         return [node for node, nodedata in tree.nodes.items()]
@@ -161,7 +161,7 @@ def get_leaves(tree):
     leaves = []
 
     for node, deg in degrees:
-        if deg == 1:
+        if deg == 1 and node != root:
             leaves.append(node)
     
     return leaves

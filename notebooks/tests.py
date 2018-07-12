@@ -24,6 +24,24 @@ class TestBurningMethods(unittest.TestCase):
         leaves = get_leaves(tree)
         self.assertEqual(leaves, [2, 3, 4, 5])
     
+    def test_get_leaves_rooted(self):
+        tree = nx.Graph()
+        
+        # Tree with 2 leaves
+        edge_list = [(0, 1), (0, 2)]
+        tree.add_edges_from(edge_list)
+        leaves = get_leaves(tree, root=0)
+        self.assertEqual(leaves, [1, 2])
+        
+        leaves = get_leaves(tree, root=1)
+        self.assertEqual(leaves, [2])
+        
+        leaves = get_leaves(tree, root=2)
+        self.assertEqual(leaves, [1])
+        
+        
+        
+    
     def test_get_neighbourhood_p2(self):
         # Path on two nodes: 0-1
         tree = nx.Graph()
