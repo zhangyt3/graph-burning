@@ -154,6 +154,9 @@ def burn_tree_using_centers(tree, update_root=True):
 
 def get_leaves(tree):
     '''Return a list containing the leaves of a tree.'''
+    if tree.order() == 1:
+        return [node for node, nodedata in tree.nodes.items()]
+    
     degrees = nx.classes.function.degree(tree)
     leaves = []
 
