@@ -180,6 +180,18 @@ def get_neighbourhood(tree, source, radius, node_distances=None):
     return neighbourhood
 
 
+def is_bridge(tree, node):
+    '''Returns True if removing the given node will disconnect the tree.'''
+    if not nx.algorithms.tree.recognition.is_tree(tree):
+        raise nx.algorithms.tree.coding.NotATree()
+    
+    if nx.classes.function.degree(tree, node) <= 1:
+        return False
+    
+    return True
+    
+
+
 def is_burning_sequence(tree, sequence):
     '''Returns True if the sequence is a valid burning sequence.'''
     pass
