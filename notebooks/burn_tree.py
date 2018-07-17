@@ -189,6 +189,31 @@ def is_bridge(tree, node):
         return False
     
     return True
+
+
+def remove_nhood(tree, nhood):
+    '''Removes as many nodes as possible from the tree while keeping the tree connected.'''
+    tree = tree.copy()
+    temp_hood = set()
+    while True:
+        changed = False
+        eccens = nx.algorithms.distance_measures.eccentricity(tree)
+
+        for node in nhood:               
+            if not is_bridge(tree, node):
+                tree.remove_node(node)
+                changed = True
+            else:
+                temp_hood.add(node)
+
+        nhood = temp_hood # So that we don't try to remove nodes that don't exist anymore
+        temp_hood = set()
+
+        # Exit loop when we cannot remove any more nodes
+        if not changed or tree.order() == 0:
+            break
+            
+    return tree
     
 
 
