@@ -9,7 +9,7 @@ from burn_tree import *
 parser = argparse.ArgumentParser(description='Process which burning algorithm to use')
 parser.add_argument('--alg',
                     type=str,
-                    help='the algorithm to use (frl, rrl, rrr)',
+                    help='the algorithm to use (frl, rrl, rrr, md)',
                     required=True)
 
 
@@ -20,7 +20,8 @@ if __name__ == '__main__':
     n = 2
     while True:   
         print("Order:", n, flush=True)
-
+        
+        # Burn all non-isomorphic trees of order n
         trees = nx.generators.nonisomorphic_trees(n)
         for tree in trees:
             if alg == 'frl':
@@ -29,6 +30,9 @@ if __name__ == '__main__':
             elif alg == 'rrl':
                 # Re-Root, Most Leaves
                 burning_sequence = burn_most_leaves_reroot(tree)
+            elif alg == 'md':
+                # Max Depth
+                burning_sequence = burn_tree(tree)
             else:
                 # Re-Root, Most Removable Nodes
                 burning_sequence = burn_most_removed(tree)
