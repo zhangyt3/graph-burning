@@ -1,0 +1,83 @@
+Order: 2
+Order: 3
+Order: 4
+Order: 5
+Order: 6
+Order: 7
+Order: 8
+n= 8 | b(G)<= 4 | ceil(sqrt(n))= 3
+Order: 9
+n= 9 | b(G)<= 4 | ceil(sqrt(n))= 3
+n= 9 | b(G)<= 4 | ceil(sqrt(n))= 3
+n= 9 | b(G)<= 4 | ceil(sqrt(n))= 3
+n= 9 | b(G)<= 4 | ceil(sqrt(n))= 3
+n= 9 | b(G)<= 4 | ceil(sqrt(n))= 3
+Order: 10
+Order: 11
+Order: 12
+Order: 13
+n=13 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=13 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=13 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=13 | b(G)<= 5 | ceil(sqrt(n))= 4
+Order: 14
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
+n=14 | b(G)<= 5 | ceil(sqrt(n))= 4
