@@ -1,5 +1,6 @@
 import networkx as nx
 import operator
+import math
 
 
 def shortest_path_lengths(graph):
@@ -216,7 +217,262 @@ def remove_nhood(tree, nhood):
     return tree
     
 
+def burn_most_leaves_reroot(tree, verbose=False):
+    '''Each iteration, root at a vertex of minimum eccentricity. Burns the vertex of height
+    i whose neighbourhood contains the most leaves.'''
+    tree = tree.copy()
+    
+    activators = []
+    marked = set()
+    bound = math.ceil(math.sqrt(tree.order()))
+    
+    i = 0
+    while tree.order() > 0:
+        if verbose:
+            print("\nTree size", tree.order())
+            print("Nodes:", tree.nodes())
+            print("Edges:", tree.edges())
+        
+        # Calculate a new root each iteration
+        eccens = nx.algorithms.distance_measures.eccentricity(tree)
+        root = min(eccens, key=eccens.get)
+        
+        # Consider all vertices v of height at most i - which N_i[v] covers the most leaves?
+        leaves = get_leaves(tree, root=root)
+        node_distances = shortest_path_lengths(tree)
+        
+        # Get all vertices within distance i of a leaf
+        near_leaves = set()
+        for leaf in leaves:
+            nhood = get_neighbourhood(tree, source=leaf, radius=i, node_distances=node_distances)
+            for node in nhood:
+                near_leaves.add(node)
+        
+        # Remove those that are not >= sqrt(n) dist from the root
+        near_leaves2 = set()
+        for node in near_leaves:
+            try:
+                if node_distances[root][node] >= bound:
+                    near_leaves2.add(node)
+            except KeyError:
+                print('\nNodes:', tree.nodes())
+                print("root:", root)
+                print("node:", node)
+                
+        # If no nodes far enough from the root, consider all nodes
+        if len(near_leaves2) == 0:
+            near_leaves2 = near_leaves
+        
+        # For all v we just got: take one with max leaves in its neighbourhood
+        max_leaves = 0
+        max_node = None
+        max_nhood = None
+        max_removed = 0
+        for node in near_leaves2:
+            nhood = get_neighbourhood(tree, source=node, radius=i, node_distances=node_distances)
+            
+            num_leaves = 0
+            for v in nhood:
+                if v in leaves:
+                    num_leaves += 1
 
-def is_burning_sequence(tree, sequence):
-    '''Returns True if the sequence is a valid burning sequence.'''
-    pass
+            if num_leaves > max_leaves:
+                max_node = node
+                max_nhood = nhood
+                max_leaves = num_leaves
+                
+                tree_nhood_removed = remove_nhood(tree, nhood)
+                max_removed = tree.order() - tree_nhood_removed.order()
+                
+            elif num_leaves == max_leaves:
+                tree_nhood_removed = remove_nhood(tree, nhood)
+                num_removed = tree.order() - tree_nhood_removed.order()
+                
+                if num_removed > max_removed:
+                    max_node = node
+                    max_nhood = nhood
+                    max_leaves = num_leaves
+                    max_removed = num_removed
+            
+        # Burn that vertex
+        if max_node in activators:
+            activators.remove(max_node)
+        activators.insert(0, max_node)
+        
+        tree = remove_nhood(tree, max_nhood)
+        
+        i += 1
+    
+    return activators
+
+
+def burn_most_leaves_fixed_root(tree, verbose=False):
+    '''Fix to root at the start to be a central vertex. Choose the vertex to burn based on 
+    the number of leaves covered. If no vertices farther than sqrt(n) distance from the root,
+    just burn the root.'''
+    tree = tree.copy()
+    
+    activators = []
+    marked = set()
+    bound = math.ceil(math.sqrt(tree.order()))
+    
+    # First, root at a central vertex (min eccentricity)
+    eccens = nx.algorithms.distance_measures.eccentricity(tree)
+    root = min(eccens, key=eccens.get)
+    
+    i = 0
+    while tree.order() > 0:
+        if verbose:
+            print("\nTree size", tree.order())
+            print("Nodes:", tree.nodes())
+            print("Edges:", tree.edges())
+        
+        # Consider all vertices v of height at most i - which N_i[v] covers the most leaves?
+        leaves = get_leaves(tree, root=root)
+        node_distances = shortest_path_lengths(tree)
+        
+        # Get all vertices within distance i of a leaf
+        near_leaves = set()
+        for leaf in leaves:
+            nhood = get_neighbourhood(tree, source=leaf, radius=i, node_distances=node_distances)
+            for node in nhood:
+                near_leaves.add(node)
+        
+        # Remove those that are not >= sqrt(n) dist from the root
+        near_leaves2 = set()
+        for node in near_leaves:
+            try:
+                if node_distances[root][node] >= bound:
+                    near_leaves2.add(node)
+            except KeyError:
+                print('\nNodes:', tree.nodes())
+                print("root:", root)
+                print("node:", node)
+                
+        # TODO: move this check the start of the loop to fix bug
+        # If no nodes far enough from the root, just burn the root
+        if len(near_leaves2) == 0:
+            # Pad the burning sequence to make it valid-ish
+            num_to_fill = bound - len(activators) - 1 
+            activators = [root] + ['x' for i in range(num_to_fill)] + activators
+            break
+        
+        # For all v we just got: take one with max leaves in its neighbourhood
+        max_leaves = 0
+        max_node = None
+        max_nhood = None
+        max_removed = 0
+        for node in near_leaves2:
+            nhood = get_neighbourhood(tree, source=node, radius=i, node_distances=node_distances)
+            
+            num_leaves = 0
+            for v in nhood:
+                if v in leaves:
+                    num_leaves += 1
+
+            if num_leaves > max_leaves:
+                max_node = node
+                max_nhood = nhood
+                max_leaves = num_leaves
+                
+                tree_nhood_removed = remove_nhood(tree, nhood)
+                max_removed = tree.order() - tree_nhood_removed.order()
+                
+            elif num_leaves == max_leaves:
+                tree_nhood_removed = remove_nhood(tree, nhood)
+                num_removed = tree.order() - tree_nhood_removed.order()
+                
+                if num_removed > max_removed:
+                    max_node = node
+                    max_nhood = nhood
+                    max_leaves = num_leaves
+                    max_removed = num_removed
+            
+        # Burn that vertex
+        if max_node in activators:
+            activators.remove(max_node)
+        activators.insert(0, max_node)
+        
+        tree = remove_nhood(tree, max_nhood)
+        
+        i += 1
+    
+    return activators
+
+
+def burn_most_removed(tree, verbose=False):
+    '''Root at a central vertex each iteration. Choose the node to burn based on whose neighbourhood
+    covers the most vertices that can be removed, without disconnecting the tree.'''
+    tree = tree.copy()
+    
+    activators = []
+    marked = set()
+    bound = math.ceil(math.sqrt(tree.order()))
+    
+    i = 0
+    while tree.order() > 0:
+        if verbose:
+            print("\nTree size", tree.order())
+            print("Nodes:", tree.nodes())
+            print("Edges:", tree.edges())
+        
+        # First, root at a central vertex (min eccentricity)
+        eccens = nx.algorithms.distance_measures.eccentricity(tree)
+        root = min(eccens, key=eccens.get)
+        
+        # Consider all vertices v of height at most i - which N_i[v] covers the most leaves?
+        leaves = get_leaves(tree, root=root)
+        node_distances = shortest_path_lengths(tree)
+        
+        # Get all vertices within distance i of a leaf
+        near_leaves = set()
+        for leaf in leaves:
+            nhood = get_neighbourhood(tree, source=leaf, radius=i, node_distances=node_distances)
+            for node in nhood:
+                near_leaves.add(node)
+        
+        # Remove those that are not >= sqrt(n) dist from the root
+        near_leaves2 = set()
+        for node in near_leaves:
+            try:
+                if node_distances[root][node] >= bound:
+                    near_leaves2.add(node)
+            except KeyError:
+                print('\nNodes:', tree.nodes())
+                print("root:", root)
+                print("node:", node)
+                
+        # If no nodes far enough from the root, just burn the root
+        if len(near_leaves2) == 0:
+            # Pad the burning sequence to make it valid-ish
+            num_to_fill = bound - len(activators) - 1 
+            activators = [root] + ['x' for i in range(num_to_fill)] + activators
+            break
+        
+        # From all these vertices, we will burn the one which covers most removable vertices
+        max_node = None
+        max_nhood = None
+        max_removed = 0
+        for node in near_leaves2:
+            nhood = get_neighbourhood(tree, source=node, radius=i, node_distances=node_distances)
+            tree_nhood_removed = remove_nhood(tree, nhood)
+            num_removed = tree.order() - tree_nhood_removed.order()
+            
+            if num_removed > max_removed:
+                max_node = node
+                max_nhood = nhood
+                max_removed = num_removed
+            
+        # Burn that vertex
+        if max_node in activators:
+            activators = [i if i != max_node else 'x' for i in activators]
+        activators.insert(0, max_node)
+        
+        tree = remove_nhood(tree, max_nhood)
+        
+        i += 1
+    
+    return activators
+
+
+

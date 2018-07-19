@@ -1,0 +1,43 @@
+import networkx as nx
+import math
+from random import randint
+import argparse
+
+from burn_tree import *
+
+
+parser = argparse.ArgumentParser(description='Process which burning algorithm to use')
+parser.add_argument('--alg',
+                    type=str,
+                    help='the algorithm to use (frl, rrl, rrr)',
+                    required=True)
+
+
+if __name__ == '__main__':
+    args = parser.parse_args()
+    alg = args.alg
+    
+    n = 2
+    while True:   
+        print("Order:", n, flush=True)
+
+        trees = nx.generators.nonisomorphic_trees(n)
+        for tree in trees:
+            if alg == 'frl':
+                # Fixed Root, Most Leaves
+                burning_sequence = burn_most_leaves_fixed_root(tree)
+            elif alg == 'rrl':
+                # Re-Root, Most Leaves
+                burning_sequence = burn_most_leaves_reroot(tree)
+            else:
+                # Re-Root, Most Removable Nodes
+                burning_sequence = burn_most_removed(tree)
+    
+            upper_bound = math.ceil(math.sqrt(tree.order()))
+
+            if len(burning_sequence) > upper_bound:
+                print('n={0:2d} | b(G)<={1:2d} | ceil(sqrt(n))={2:2d}'.format(tree.order(),
+                                                                              len(burning_sequence),                  
+                                                                              math.ceil(math.sqrt(tree.order()))), flush=True)
+        n += 1
+    
