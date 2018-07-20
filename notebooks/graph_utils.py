@@ -16,7 +16,7 @@ def create_adj_mat(filepath):
 
 
 if __name__ == '__main__':
-    pprint(create_adj_mat('./trees/cross.mat'))
-    pprint(create_adj_mat('./trees/ethane.mat'))    
+    pprint(create_adj_mat('../trees/cross.mat'))
+    pprint(create_adj_mat('../trees/ethane.mat'))    
 
         
