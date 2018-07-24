@@ -416,6 +416,11 @@ def burn_most_removed(tree, verbose=False):
             print("Nodes:", tree.nodes())
             print("Edges:", tree.edges())
         
+        # Remove any marked vertices that are now removeable
+        for node in marked:
+            if node in tree and not is_bridge(tree, node):
+                tree.remove_node(node)
+        
         # First, root at a central vertex (min eccentricity)
         eccens = nx.algorithms.distance_measures.eccentricity(tree)
         root = min(eccens, key=eccens.get)
@@ -469,6 +474,11 @@ def burn_most_removed(tree, verbose=False):
         activators.insert(0, max_node)
         
         tree = remove_nhood(tree, max_nhood)
+        
+        # Mark all vertices in the neighbourhood that could not be removed
+        for node in max_nhood:
+            if node in tree:
+                marked.add(node)
         
         i += 1
     
